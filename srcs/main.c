@@ -1,6 +1,50 @@
 
 #include "dijkstra.h"
 
+void    free_lines(char **lines)
+{
+    int i;
+
+    i = 0;
+    while (lines[i])
+    {
+        free(lines[i]);
+        i++;
+    }
+    free(lines);
+}
+
+void    free_nodes(char ***nodes)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (nodes[i])
+    {
+        j = 0;
+        while (j < 3)
+        {
+            if (nodes[i])
+                free(nodes[i][j]);
+            j++;
+        }
+        free(nodes[i]);
+        i++;
+    }
+    free(nodes);
+}
+
+void    free_graph(t_dict *graph)
+{
+    int i;
+
+    i = 0;
+    while (graph[i].node)
+        free(graph[i++].list);
+    free(graph);
+}
+
 void    algo(char *filename, char *start, char *end)
 {
     char    *res;
@@ -16,7 +60,8 @@ void    algo(char *filename, char *start, char *end)
         return ;
     }
     lines = ft_split(res, "\n");
-    nodes = create_list_nodes(lines, nb_words(res, "\n"));
+    free(res);
+    nodes = create_list_nodes(lines);
     if (is_valid_graph(nodes, start, end) == 0)
     {
         write(1, "Graphe invalide.\n", 17);
@@ -26,6 +71,10 @@ void    algo(char *filename, char *start, char *end)
     tab = solve_graph(graph, nodes, start);
     print_solution(tab, start, end);
     print_distance(tab, end);
+    free_lines(lines);
+    free_nodes(nodes);
+    free_graph(graph);
+    free(tab);
 }
 
 int     main(int argc, char *argv[])

@@ -58,9 +58,9 @@ int     ind_end(char *str, char *charset, int index)
     i = 0;
     while (index + 1 > 0)
     {
-        while (sep(str[i], charset) == 1)
+        while (str[i] && sep(str[i], charset) == 1)
             i++;
-        while (sep(str[i], charset) == 0)
+        while (str[i] && sep(str[i], charset) == 0)
             i++;
         index--;
     }

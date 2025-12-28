@@ -1,23 +1,46 @@
-EXEC = dijkstra_solver.exe
-CC = gcc
-CFLAGS = -Wall -Wextra -O2
-SRC = $(wildcard *.c)
-OBJ = $(SRC:.c=.o)
+NAME = dijkstra
 
-all: $(EXEC)
+SRC_DIR = srcs
+INC_DIR = includes
+OBJ_DIR = .obj
 
-$(EXEC): $(OBJ)
-	$(CC) $(OBJ) -o $(EXEC)
+FILE =	create_dict.c \
+		dict.c \
+		ft_split.c \
+		ft.c \
+		functions.c \
+		init_update.c \
+		main.c \
+		parser.c \
+		solve.c \
+		valid.c \
 
-%.o: %.c
+OBJ_DIR = .obj
+
+SRC = $(addprefix $(SRC_DIR)/, $(FILE))
+OBJ = $(addprefix $(OBJ_DIR)/, $(FILE:.c=.o))
+DEP = $(addprefix $(OBJ_DIR)/, $(FILE:.c=.d))
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -MMD -I$(INC_DIR) -g3
+
+all: $(NAME)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) -o $(NAME) -g3
+
 clean:
-	del /Q *.o 2>nul || echo Nothing to clean
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	del /Q $(EXEC) 2>nul || echo Nothing to remove
+	rm -f $(NAME)
 
 re: fclean all
+
+-include $(DEP)
 
 .PHONY: all clean fclean re

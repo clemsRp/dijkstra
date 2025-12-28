@@ -22,5 +22,6 @@ t_tab   *solve_graph(t_dict *graph, char ***nodes, char *start)
         start = min.node;
         swap(not_visited, min.node);
     }
+    free(not_visited);
     return (tab);
 }

@@ -34,7 +34,7 @@ void    update_tab(t_dict *graph, t_tab *tab, char **not_visited, char *start, i
 char    *parser(char *filename);
 char    *get_node_in_tab(t_tab *tab, char *node);
 char    **ft_split(char *str, char *charset);
-char    ***create_list_nodes(char **lines, int nb_words);
+char    ***create_list_nodes(char **lines);
 char    **init_not_visited(char ***nodes, int nb_nodes);
 
 int     nb_words(char *str, char *charset);

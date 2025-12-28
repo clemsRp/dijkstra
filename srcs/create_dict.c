@@ -1,12 +1,15 @@
 
 #include "dijkstra.h"
 
-char    ***create_list_nodes(char **lines, int nb_words)
+char    ***create_list_nodes(char **lines)
 {
     int         i;
     char    ***nodes;
 
-    nodes = malloc(sizeof(char **) * (nb_words + 1));
+    i = 0;
+    while (lines[i])
+        i++;
+    nodes = malloc(sizeof(char **) * (i + 1));
     i = 0;
     while (lines[i])
     {
